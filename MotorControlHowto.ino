@@ -24,8 +24,6 @@ void loop(){
 
 	float effort = error * kp;
 
-	//Serial. println("Current "+String(currentPositon)+" target "+String(position_setpoint)+" error "+String(error)+" effort "+String(effort));
-
 	motor.setEffort(effort);
 	delay(1);
 }
