@@ -8,24 +8,21 @@ void setup(){
 	// Start the data interface
 	data.attach();
 }
-float effort=0;
+float scalar = 1000000.0;
+float effort=600.0/scalar;
 
 void loop(){
-	float kp = data.v_kp/1000.0;
+	float kp = data.v_kp/scalar;
 	float velocity_setpoint = data.velocity_target_degrees_per_sercond;
 	float current_velocity = motor.getDegreesPerSecond();
 
-	float error = velocity_setpoint-current_velocity;
+	float error = (velocity_setpoint-current_velocity)*kp;
 
-	effort+=(error*kp);
-
-	if(effort>1)
-		effort=1;
-	if( effort<-1)
-		effort=-1;
-
-	//Serial. println("Current "+String(currentPositon)+" target "+String(position_setpoint)+" error "+String(error)+" effort "+String(effort));
-
-	motor.setEffort(effort);
+	if(velocity_setpoint>0)
+		effort+=(error);
+	else
+		effort-=(error);
+	Serial.println("Effort "+String(effort*scalar));
+	motor.setEffort(effort*velocity_setpoint);
 	delay(1);
 }
