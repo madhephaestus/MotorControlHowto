@@ -5,3 +5,5 @@ libraries
 *.settings*
 .project
 spec.d
+Release
+Debug
