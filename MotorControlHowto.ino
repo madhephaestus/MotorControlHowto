@@ -8,21 +8,24 @@ void setup(){
 	// Start the data interface
 	data.attach();
 }
-float scalar = 1000000.0;
-float effort=600.0/scalar;
+
 
 void loop(){
-	float kp = data.v_kp/scalar;
+	float kp=data.kp;
+	float currentPositon = motor.getCurrentDegrees();
 	float velocity_setpoint = data.velocity_target_degrees_per_sercond;
-	float current_velocity = motor.getDegreesPerSecond();
 
-	float error = (velocity_setpoint-current_velocity)*kp;
+	float deltaPosition = velocity_setpoint*0.001;// change in position expected in 1ms
+	// Only run away the setpoint if effort is not pegged
+	if(motor.getEffort()<0.95)
+		data.position_setpoint+=deltaPosition;
 
-	if(velocity_setpoint>0)
-		effort+=(error);
-	else
-		effort-=(error);
-	Serial.println("Effort "+String(effort*scalar));
-	motor.setEffort(effort*velocity_setpoint);
+	float error = data.position_setpoint-currentPositon;
+
+	float effort = error * kp;
+
+	//Serial. println("Current "+String(currentPositon)+" target "+String(position_setpoint)+" error "+String(error)+" effort "+String(effort));
+
+	motor.setEffort(effort);
 	delay(1);
 }
