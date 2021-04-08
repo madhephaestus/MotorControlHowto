@@ -14,6 +14,6 @@ SetPIDSetpoint::SetPIDSetpoint(int num, Configurations * list) :
 }
 
 void SetPIDSetpoint::event(float * buffer) {
-	float duration = buffer[0];
-	mydata->position_setpoint=buffer[1];
+
+	mydata->position_setpoint=buffer[2];
 }

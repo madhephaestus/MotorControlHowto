@@ -39,6 +39,9 @@ void Configurations::attach() {
 	if(isCongigurationsAttached)
 		return;
 	isCongigurationsAttached=true;
+	// disable the built in PID and stop the motor
+	mymotor->setEffort(0);
+	mymotor->DELTA_EFFORT=1;
 	manager.setup();
 	int numberOfPID=1;
 	Configurations * pidList=this;
@@ -55,6 +58,10 @@ void Configurations::attach() {
 
 	xTaskCreatePinnedToCore(onConfigurationsTimer, "Configurations server",
 			8192, NULL, 1, &complexHandlerTask2, 1);
+
+	while(manager.getState() !=Connected){
+		delay(1);
+	}
 
 }
 

@@ -28,10 +28,10 @@ public:
 	void loop();
 
 	Motor * mymotor;
-	float v_kp=1;
+	float v_kp=0.01;
 	float v_ki=0;
 	float v_kd=0;
-	float kp=1;
+	float kp=0.01;
 	float ki=0;
 	float kd=0;
 	float position_setpoint=0;
