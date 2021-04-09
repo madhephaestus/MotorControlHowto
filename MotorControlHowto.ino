@@ -11,7 +11,7 @@ void setup(){
 
 
 void loop(){
-	float kp=data.kp/1000.0;
+	float kp=data.v_kp/1000.0;
 	float velocity_setpoint = data.velocity_target_degrees_per_sercond;
 
 	float effort = velocity_setpoint * kp;
