@@ -11,18 +11,10 @@ void setup(){
 
 
 void loop(){
-	float kp=data.kp;
-	float currentPositon = motor.getCurrentDegrees();
+	float kp=data.kp/1000.0;
 	float velocity_setpoint = data.velocity_target_degrees_per_sercond;
 
-	float deltaPosition = velocity_setpoint*0.001;// change in position expected in 1ms
-	// Only run away the setpoint if effort is not pegged
-	if(motor.getEffort()<0.95)
-		data.position_setpoint+=deltaPosition;
-
-	float error = data.position_setpoint-currentPositon;
-
-	float effort = error * kp;
+	float effort = velocity_setpoint * kp;
 
 	motor.setEffort(effort);
 	delay(1);

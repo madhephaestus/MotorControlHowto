@@ -28,7 +28,7 @@ public:
 	void loop();
 
 	Motor * mymotor;
-	float v_kp=0.01;
+	float v_kp=0.57;
 	float v_ki=0;
 	float v_kd=0;
 	float kp=0.01;
