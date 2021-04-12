@@ -8,7 +8,7 @@ void setup(){
 	// Start the data interface
 	data.attach();
 }
-float effort=0;
+float effortIntegrated=0;
 
 void loop(){
 	float kp = data.v_kp/1000.0;
@@ -17,15 +17,17 @@ void loop(){
 
 	float error = velocity_setpoint-current_velocity;
 
-	effort+=(error*kp);
+	float effort =(error*kp);
 
-	if(effort>1)
-		effort=1;
-	if( effort<-1)
-		effort=-1;
+	effortIntegrated+=effort;
+
+	if(effortIntegrated>1)
+		effortIntegrated=1;
+	if( effortIntegrated<-1)
+		effortIntegrated=-1;
 
 	//Serial. println("Current "+String(currentPositon)+" target "+String(position_setpoint)+" error "+String(error)+" effort "+String(effort));
 
-	motor.setEffort(effort);
+	motor.setEffort(effortIntegrated);
 	delay(1);
 }
