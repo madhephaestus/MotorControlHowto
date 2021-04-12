@@ -18,10 +18,10 @@ void loop(){
 
 	float error = (velocity_setpoint-current_velocity)*kp;
 
-	if(velocity_setpoint>0)
-		effort+=(error);
-	else
-		effort-=(error);
+	if(velocity_setpoint<0)
+		error=-(error);
+
+	effort+=(error);
 	Serial.println("Effort "+String(effort*scalar));
 	motor.setEffort(effort*velocity_setpoint);
 	delay(1);
