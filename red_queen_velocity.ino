@@ -16,7 +16,7 @@ void loop(){
 	float velocity_setpoint = data.velocity_target_degrees_per_sercond;
 
 	float deltaPosition = velocity_setpoint*0.001;// change in position expected in 1ms
-	// Only run away the setpoint if effort is not pegged
+	// Only run away the setpoint if effort is not pegged and the velocity is non zero
 	if(motor.getEffort()<0.95 && fabs(velocity_setpoint)>1)
 		data.position_setpoint+=deltaPosition;
 
