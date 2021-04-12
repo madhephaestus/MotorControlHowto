@@ -25,7 +25,7 @@ void onConfigurationsTimer(void *param) {
 	ESP_LOGI(TAG, "Starting the PID loop thread");
 
 	while (1) {
-		vTaskDelay(10);
+		vTaskDelay(20);
 		self->loop();
 	}
 	ESP_LOGE(TAG, "ERROR Pid thread died!");
