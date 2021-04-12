@@ -9,7 +9,7 @@ void setup(){
 	data.attach();
 }
 float scalar = 1000000.0;
-float effort=600.0/scalar;
+float gain=600.0/scalar;
 
 void loop(){
 	float kp = data.v_kp/scalar;
@@ -21,8 +21,14 @@ void loop(){
 	if(velocity_setpoint<0)
 		error=-(error);
 
-	effort+=(error);
-	Serial.println("Effort "+String(effort*scalar));
-	motor.setEffort(effort*velocity_setpoint);
+	float newGain = error+gain;
+
+	float output= newGain*velocity_setpoint;
+
+	if(fabs(output)<1)
+		gain=newGain;
+
+	//Serial.println("Effort "+String(gain*scalar));
+	motor.setEffort(output);
 	delay(1);
 }
