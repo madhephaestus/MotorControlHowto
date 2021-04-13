@@ -17,7 +17,7 @@ void loop(){
 
 	float deltaPosition = velocity_setpoint*0.001;// change in position expected in 1ms
 	// Only run away the setpoint if effort is not pegged and the velocity is non zero
-	if(motor.getEffort()<0.95 && fabs(velocity_setpoint)>1)
+	if(fabs(motor.getEffort())<0.95 && fabs(velocity_setpoint)>1)
 		data.position_setpoint+=deltaPosition;
 
 	float error = data.position_setpoint-currentPositon;
